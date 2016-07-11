@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button (click)="dismiss()">Cancel</button>
+        </ion-buttons>
+
+        <ion-title>
+            Filter search
+        </ion-title>
+
+        <ion-buttons end>
+            <button (click)="applyFilters()">Done</button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="filter">
+    <ion-list>
+        <ion-list-header>Filters</ion-list-header>
+
+        <ion-item>
+            <ion-label>UPI</ion-label>
+            <ion-toggle [(ngModel)]="excludedFilters.upi" secondary></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-toggle [(ngModel)]="excludedFilters.email" secondary></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Display name</ion-label>
+            <ion-toggle [(ngModel)]="excludedFilters.displayName" secondary></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>First name</ion-label>
+            <ion-toggle [(ngModel)]="excludedFilters.firstName" secondary></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Last name</ion-label>
+            <ion-toggle [(ngModel)]="excludedFilters.lastName" secondary></ion-toggle>
+        </ion-item>
+    </ion-list>
+
+    <ion-list>
+        <button ion-item (click)="resetFilters()" danger detail-none class="reset-filters">
+            Reset All Filters
+        </button>
+    </ion-list>
+</ion-content>

@@ -1,0 +1,97 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Ldapa</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding class="home">
+    <ion-list>
+        <ion-item-group>
+            <ion-toolbar white>
+                <ion-buttons>
+                    <button primary (click)="presentFilter()">
+                        <ion-icon name="options"></ion-icon>
+                        Search Filter
+                    </button>
+                </ion-buttons>
+            </ion-toolbar>
+
+            <ion-item *ngIf="excludedFilters.upi">
+                <ion-label floating>UPI</ion-label>
+                <ion-input [(ngModel)]="upi" type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="excludedFilters.email">
+                <ion-label floating>Email</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="excludedFilters.displayName">
+                <ion-label floating>Display name</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="excludedFilters.firstName">
+                <ion-label floating>First name</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="excludedFilters.lastName">
+                <ion-label floating>Last name</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+
+            <ion-item-divider sticky>
+            </ion-item-divider>
+            <ion-item>
+                <button (click)="search()">
+                    <ion-icon name="search"></ion-icon>
+                    Do Search
+                </button>
+            </ion-item>
+        </ion-item-group>
+    </ion-list>
+
+    <ion-toolbar white>
+        <ion-buttons item-left>
+            <button primary (click)="presentFilter()">
+                Results
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button danger (click)="clearResults()">
+                <ion-icon name="close-circle"></ion-icon>
+                Clear
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <ion-grid>
+        <ion-row class="header">
+            <ion-col>#</ion-col>
+            <ion-col>UPI</ion-col>
+            <ion-col>Email</ion-col>
+            <ion-col>Display name</ion-col>
+            <ion-col>First name</ion-col>
+            <ion-col>Last name</ion-col>
+            <ion-col>Job title</ion-col>
+            <ion-col>Department</ion-col>
+            <ion-col>Mobile</ion-col>
+            <ion-col>Groups</ion-col>
+            <ion-col></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let user of users, let i = index" class="results">
+            <ion-col>{{i + 1}}</ion-col>
+            <ion-col>{{user.upi}}</ion-col>
+            <ion-col>{{user.emailAddress}}</ion-col>
+            <ion-col>{{user.displayName}}</ion-col>
+            <ion-col>{{user.firstName}}</ion-col>
+            <ion-col>{{user.lastName}}</ion-col>
+            <ion-col>{{user.jobTitle}}</ion-col>
+            <ion-col>{{user.department}}</ion-col>
+            <ion-col>{{user.mobile}}</ion-col>
+            <ion-col>
+                <button clear>View groups</button>
+            </ion-col>
+            <ion-col>
+                <ion-icon name="close-circle" (click)="popUser(user)"></ion-icon>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
