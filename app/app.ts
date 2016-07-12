@@ -48,6 +48,9 @@ export class MyApp {
       let expireDate = new Date(authDate);
       expireDate.setSeconds(expireDate.getSeconds() + this.authModel.expires_in);
 
+      console.log(`Authenticated: ${authDate}`);
+      console.log(`Token expires: ${expireDate}`);
+
       // Current date greater than expiry date; reauth needed
       if (new Date().getDate() >= expireDate.getDate()) {
         // Re-authenticate
