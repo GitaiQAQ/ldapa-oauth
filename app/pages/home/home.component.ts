@@ -37,29 +37,30 @@ export class HomeComponent {
     });
     this.nav.present(loading);
 
-    this.userService.getUser(this.upi).subscribe(data => {
-      if (data) {
-        loading.dismiss().then(() => {
-          this.users.push(data);
-          console.log(this.users.length);
-          this.upi = this.users.length > 0 ? "" : this.upi;
-        });
-      } else {
+    if (this.upi) {
+      this.userService.getUserByUpi(this.upi).subscribe(data => {
+        if (data) {
+          loading.dismiss().then(() => {
+            this.users.push(data);
+            this.upi = this.users.length > 0 ? "" : this.upi;
+          });
+        } else {
+          loading.dismiss().then(() => {
+            this.nav.present(Toast.create({
+              message: `User ${this.upi} not found :(`,
+              duration: 4000
+            }));
+          });
+        }
+      }, error => {
         loading.dismiss().then(() => {
           this.nav.present(Toast.create({
-            message: `User ${this.upi} not found :(`,
+            message: JSON.parse(error._body).message,
             duration: 4000
           }));
         });
-      }
-    }, error => {
-      loading.dismiss().then(() => {
-        this.nav.present(Toast.create({
-          message: JSON.parse(error._body).message,
-          duration: 4000
-        }));
       });
-    });
+    }
   }
 
   presentFilter() {

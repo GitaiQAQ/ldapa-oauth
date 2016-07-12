@@ -13,8 +13,8 @@ export class AuthModel {
     public loading: Loading;
 
     // Logged in user details (access token + logged in user entity)
-    public access_token: String;
-    public expires_in: Number;
+    public access_token: string;
+    public expires_in: number;
 
     constructor() {}
 

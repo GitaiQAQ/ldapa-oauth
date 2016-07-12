@@ -27,22 +27,12 @@ export class MyApp {
         if (identity_info) {
           this.resolveUser(identity_info);
         } else {
-          let confirm = Alert.create({
-            title: 'Unauthenticated',
-            message: "Looks like you need new keys. You'll have to log in again!",
-            buttons: [{
-              text: 'Login',
-              handler: () => {
-                this.redirect();
-              }
-            }]
-          });
-
-          this.nav.present(confirm);
+          this.authenticate()
         }
       });
     });
   }
+
 
   /**
    * Set auth model access token and expires information to oauth information
@@ -52,9 +42,44 @@ export class MyApp {
     this.authModel.access_token = JSON.parse(identity_info).oauth.access_token;
     this.authModel.expires_in = JSON.parse(identity_info).oauth.expires_in;
 
-    this.rootPage = TabsPage;
+    console.log(`Expires in: ${this.authModel.expires_in}`);
+
+    this.localStorage.get('authDate').then(authDate => {
+      let expireDate = new Date(authDate);
+      expireDate.setSeconds(expireDate.getSeconds() + this.authModel.expires_in);
+
+      // Current date greater than expiry date; reauth needed
+      if (new Date().getDate() >= expireDate.getDate()) {
+        // Re-authenticate
+        console.log("Token expired, re-authenticating...");
+        this.authenticate();
+      } else {
+        this.rootPage = TabsPage;
+      }
+    });
   }
 
+  /**
+   * Authentication handler
+   */
+  authenticate() {
+    let confirm = Alert.create({
+      title: 'Unauthenticated',
+      message: "Looks like you need new keys. You'll have to log in again!",
+      buttons: [{
+        text: 'Login',
+        handler: () => {
+          this.redirect();
+        }
+      }]
+    });
+
+    this.nav.present(confirm);
+  }
+
+  /**
+   * Redirect to oauth endpoint
+   */
   redirect() {
     window.location.href = "https://pam.dev.auckland.ac.nz/identity/oauth2/authorize?client_id=maxx-identity-app&response_type=token";
   }

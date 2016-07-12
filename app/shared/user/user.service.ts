@@ -13,10 +13,10 @@ import {User} from "./user";
 export class UserService {
     constructor(public http:Http, private authModel: AuthModel) {}
 
-    getUser(user: String): Observable<User> {
+    getUserByUpi(upi: String): Observable<User> {
         let headers = new Headers();
         headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
 
-        return this.http.get(AuthModel.server + '/identity/' + user, {headers: headers}).map(res => res.json());
+        return this.http.get(AuthModel.server + '/identity/' + upi, {headers: headers}).map(res => res.json());
     }
 }

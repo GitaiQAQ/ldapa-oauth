@@ -15,7 +15,11 @@
                     expires_in: parameterMap.expires_in,
                 }
             };
+
+            var t = new Date();
+
             window.localStorage.setItem("identity_info", JSON.stringify(identity_info));
+            window.localStorage.setItem("authDate", t);
             window.location.href = "http://localhost:8100/";
         } else {
             alert("Problem authenticating");
