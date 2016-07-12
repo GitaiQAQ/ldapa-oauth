@@ -90,7 +90,9 @@
                 <button clear (click)="presentGroups(user)">View groups</button>
             </ion-col>
             <ion-col>
-                <ion-icon name="close-circle" (click)="popUser(user)"></ion-icon>
+                <button clear dark (click)="popUser(user)">
+                    <ion-icon name="close-circle"></ion-icon>
+                </button>
             </ion-col>
         </ion-row>
     </ion-grid>
