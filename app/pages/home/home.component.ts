@@ -41,6 +41,8 @@ export class HomeComponent {
       if (data) {
         loading.dismiss().then(() => {
           this.users.push(data);
+          console.log(this.users.length);
+          this.upi = this.users.length > 0 ? "" : this.upi;
         });
       } else {
         loading.dismiss().then(() => {
