@@ -33,11 +33,10 @@ export class MyApp {
     });
   }
 
-
   /**
    * Set auth model access token and expires information to oauth information
-   * @param identity_info object
-     */
+   * @param identity_info string
+   */
   resolveUser(identity_info) {
     this.authModel.access_token = JSON.parse(identity_info).oauth.access_token;
     this.authModel.expires_in = JSON.parse(identity_info).oauth.expires_in;

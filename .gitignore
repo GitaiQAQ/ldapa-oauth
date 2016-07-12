@@ -38,3 +38,7 @@ www/build
 
 # idea stuff 
 .idea/
+
+# Cordova plugins
+plugins/
+hooks/
