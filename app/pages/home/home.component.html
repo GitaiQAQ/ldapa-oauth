@@ -62,8 +62,8 @@
 
     <ion-grid>
         <ion-row class="header">
-            <ion-col>#</ion-col>
-            <ion-col>UPI</ion-col>
+            <ion-col class="small">#</ion-col>
+            <ion-col class="upi">UPI</ion-col>
             <ion-col>Email</ion-col>
             <ion-col>Display name</ion-col>
             <ion-col>First name</ion-col>
@@ -75,8 +75,8 @@
             <ion-col></ion-col>
         </ion-row>
         <ion-row *ngFor="let user of users, let i = index" class="results">
-            <ion-col>{{i + 1}}</ion-col>
-            <ion-col>{{user.upi}}</ion-col>
+            <ion-col class="small">{{i + 1}}</ion-col>
+            <ion-col class="upi">{{user.upi}}</ion-col>
             <ion-col>{{user.emailAddress}}</ion-col>
             <ion-col>{{user.displayName}}</ion-col>
             <ion-col>{{user.firstName}}</ion-col>
