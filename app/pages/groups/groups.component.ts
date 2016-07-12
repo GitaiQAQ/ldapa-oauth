@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {ViewController, NavParams} from "ionic-angular";
+import {User} from "../../shared/user/user";
 
 /**
  * Groups component for viewing user group information
@@ -9,9 +10,37 @@ import {ViewController, NavParams} from "ionic-angular";
   templateUrl: 'build/pages/groups/groups.component.html',
 })
 export class GroupsComponent {
-  constructor(private view: ViewController, private navParams: NavParams) { }
+  user: User;
+  groups: Array<string>;
+  searchQuery: string;
 
-  dismiss(data) {
-    this.view.dismiss(data);
+  constructor(private view: ViewController, private navParams: NavParams) {
+    this.user = navParams.data;
+
+    this.searchQuery = '';
+    this.initializeItems();
+  }
+
+  dismiss() {
+    this.view.dismiss();
+  }
+
+  initializeItems() {
+    this.groups = this.user.groups;
+  }
+
+  getItems(ev) {
+    // Reset items back to all of the items
+    this.user.groups = this.groups;
+
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.user.groups = this.user.groups.filter((item) => {
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
   }
 }

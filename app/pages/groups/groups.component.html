@@ -1,11 +1,21 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Users groups
+            <ion-icon name="people"></ion-icon>
+            {{user.firstName}}'s groups
         </ion-title>
 
         <ion-buttons end>
             <button (click)="dismiss()">Done</button>
         </ion-buttons>
     </ion-toolbar>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 </ion-header>
+<ion-content class="groups">
+    <ion-list *ngIf="user.groups">
+        <ion-item *ngFor="let group of user.groups">
+            {{group}}
+        </ion-item>
+    </ion-list>
+    <h2 *ngIf="!user.groups">No permissions to view groups :(</h2>
+</ion-content>

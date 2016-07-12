@@ -87,7 +87,7 @@
             <ion-col>{{user.department}}</ion-col>
             <ion-col>{{user.mobile}}</ion-col>
             <ion-col>
-                <button clear>View groups</button>
+                <button clear (click)="presentGroups(user)">View groups</button>
             </ion-col>
             <ion-col>
                 <ion-icon name="close-circle" (click)="popUser(user)"></ion-icon>

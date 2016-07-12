@@ -2,13 +2,13 @@
  * Ldap 'user' entity
  */
 export class User {
-    upi: String;
-    emailAddress: String;
-    displayName: String;
-    firstName: String;
-    lastName: String;
-    jobTitle: String;
-    department: String;
-    mobile: String;
-    groups: Array<String>;
+    upi: string;
+    emailAddress: string;
+    displayName: string;
+    firstName: string;
+    lastName: string;
+    jobTitle: string;
+    department: string;
+    mobile: string;
+    groups: Array<string>;
 }
