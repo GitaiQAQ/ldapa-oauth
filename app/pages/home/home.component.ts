@@ -105,7 +105,7 @@ export class HomeComponent {
       buttons: [{
         text: 'Login',
         handler: () => {
-          window.location.href = "https://pam.dev.auckland.ac.nz/identity/oauth2/authorize?client_id=maxx-identity-app&response_type=token";
+          window.location.href = AuthModel.authUrl;
         }
       }]
     });
