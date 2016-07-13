@@ -41,23 +41,25 @@ export class MyApp {
     this.authModel.access_token = JSON.parse(identity_info).oauth.access_token;
     this.authModel.expires_in = JSON.parse(identity_info).oauth.expires_in;
 
-    console.log(`Expires in: ${this.authModel.expires_in}`);
-
     this.localStorage.get('authDate').then(authDate => {
-      let expireDate = new Date(authDate);
-      expireDate.setSeconds(expireDate.getSeconds() + this.authModel.expires_in);
+      let expireDate: Date = new Date(
+        new Date(authDate).getTime() + (this.authModel.expires_in * 1000)
+      );
+
+      let currentDate: Date = new Date();
 
       console.log(`Authenticated: ${authDate}`);
+      console.log(`Current date: ${currentDate}`);
       console.log(`Token expires: ${expireDate}`);
 
       // Current date greater than expiry date; reauth needed
-      if (new Date().getDate() >= expireDate.getDate()) {
+      if (currentDate >= expireDate) {
         // Re-authenticate
         console.log("Token expired, re-authenticating...");
         this.authenticate();
-      } else {
-        this.rootPage = TabsPage;
       }
+
+      this.rootPage = TabsPage;
     });
   }
 
