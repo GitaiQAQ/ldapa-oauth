@@ -16,8 +16,14 @@ import {AuthModel} from "../../shared/auth/auth.model";
 })
 export class HomeComponent {
 
+  // User list (for display)
   users: Array<User> = [];
+
+  // NgModels (for searching) Note: Unique searches are prioritized (such as UPI)
   upi: String;
+  firstName: String;
+  lastName: String;
+
   localStorage: Storage;
 
   excludedFilters = {
@@ -51,6 +57,64 @@ export class HomeComponent {
           loading.dismiss().then(() => {
             this.nav.present(Toast.create({
               message: `User ${this.upi} not found :(`,
+              duration: 4000
+            }));
+          });
+        }
+      }, error => {
+        loading.dismiss().then(() => {
+          this.nav.present(Toast.create({
+            message: JSON.parse(error._body).message,
+            duration: 4000
+          }));
+        });
+      });
+    } else if (this.firstName) {
+      this.userService.searchUserByName(this.firstName).subscribe(data => {
+        if (data) {
+          loading.dismiss().then(() => {
+            // Cycle through user and push to view. Limit to first 20 results.
+            data.forEach((user, i) => {
+              this.users.push(user)
+
+              if (i == 20) { return false; }
+            });
+
+            this.firstName = this.users.length > 0 ? "" : this.firstName;
+          });
+        } else {
+          loading.dismiss().then(() => {
+            this.nav.present(Toast.create({
+              message: `Users with name ${this.firstName} not found :(`,
+              duration: 4000
+            }));
+          });
+        }
+      }, error => {
+        loading.dismiss().then(() => {
+          this.nav.present(Toast.create({
+            message: JSON.parse(error._body).message,
+            duration: 4000
+          }));
+        });
+      });
+    } else if (this.lastName) {
+      this.userService.searchUserLastName(this.lastName).subscribe(data => {
+        if (data) {
+          loading.dismiss().then(() => {
+            // Cycle through user and push to view. Limit to first 20 results.
+            data.forEach((user, i) => {
+              this.users.push(user)
+
+              if (i == 20) { return false; }
+            });
+
+            this.lastName = this.users.length > 0 ? "" : this.lastName;
+          });
+        } else {
+          loading.dismiss().then(() => {
+            this.nav.present(Toast.create({
+              message: `Users with last name ${this.lastName} not found :(`,
               duration: 4000
             }));
           });

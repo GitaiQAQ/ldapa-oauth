@@ -35,11 +35,11 @@
             </ion-item>
             <ion-item *ngIf="excludedFilters.firstName">
                 <ion-label floating>First name</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="firstName" type="text"></ion-input>
             </ion-item>
             <ion-item *ngIf="excludedFilters.lastName">
                 <ion-label floating>Last name</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="lastName" type="text"></ion-input>
             </ion-item>
 
             <ion-item>

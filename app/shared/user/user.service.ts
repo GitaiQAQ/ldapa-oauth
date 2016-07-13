@@ -1,22 +1,54 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers} from "@angular/http";
+import {Http, Headers, RequestOptions} from "@angular/http";
 import {AuthModel} from "../auth/auth.model";
 import {Observable} from "rxjs/Rx";
 import {User} from "./user";
 
 /**
- * Ldap user service class
+ * Ldapa user service class
  * Api interaction example
+ * - Connects to API endpoints (Swagger + SpringBoot)
+ * - Backend API queries and fetches information from internal AD LDAP
+ * - Returns information as a response class payload
  */
 
 @Injectable()
 export class UserService {
-    constructor(public http:Http, private authModel: AuthModel) {}
+  constructor(public http:Http, private authModel: AuthModel) {}
 
-    getUserByUpi(upi: String): Observable<User> {
-        let headers = new Headers();
-        headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
+  /**
+   * Fetch a single user and their details by UPI
+   * @param upi Username
+   * @returns {Observable<User>} User entity
+   */
+  getUserByUpi(upi: String): Observable<User> {
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
 
-        return this.http.get(AuthModel.server + '/identity/' + upi, {headers: headers}).map(res => res.json());
-    }
+    return this.http.get(AuthModel.server + '/identity/' + upi, {headers: headers}).map(res => res.json());
+  }
+
+  /**
+   * Get a list of users by their name
+   * @param firstName (users first name)
+   * @returns {Observable<R>}
+   */
+  searchUserByName(firstName: String): Observable<Array<User>> {
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
+
+    return this.http.get(AuthModel.server + '/identity/_search?firstname=' + firstName, {headers: headers}).map(res => res.json());
+  }
+
+  /**
+   * Get a list of users by their last name
+   * @param lastName (users last name)
+   * @returns {Observable<R>}
+   */
+  searchUserLastName(lastName: String): Observable<Array<User>> {
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
+
+    return this.http.get(AuthModel.server + '/identity/_search?lastname=' + lastName, {headers: headers}).map(res => res.json());
+  }
 }
