@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {NavController, Toast, Loading, Modal} from 'ionic-angular';
+import {NavController, Toast, Loading, Modal, Storage, Alert, LocalStorage} from 'ionic-angular';
 import {FilterComponent} from "../filter/filter.component";
 import {User} from "../../shared/user/user";
 import {UserService} from "../../shared/user/user.service";
 import {GroupsComponent} from "../groups/groups.component";
+import {AuthModel} from "../../shared/auth/auth.model";
 
 /**
  * Home component
@@ -17,6 +18,7 @@ export class HomeComponent {
 
   users: Array<User> = [];
   upi: String;
+  localStorage: Storage;
 
   excludedFilters = {
     upi: true,
@@ -26,7 +28,8 @@ export class HomeComponent {
     lastName: false
   };
 
-  constructor(private nav: NavController, private userService: UserService) {
+  constructor(private nav: NavController, private userService: UserService, private authModel: AuthModel) {
+    this.localStorage = new Storage(LocalStorage);
   }
 
   // Just grab upi and search for now
@@ -89,5 +92,24 @@ export class HomeComponent {
     if (index > -1) {
       this.users.splice(index, 1)
     }
+  }
+
+  logout() {
+    this.localStorage.remove('identity_info');
+    this.authModel.access_token = null;
+    this.authModel.expires_in = null;
+
+    let confirm = Alert.create({
+      title: 'Successfully logged out',
+      message: "You'll have to log in again to use this app",
+      buttons: [{
+        text: 'Login',
+        handler: () => {
+          window.location.href = "https://pam.dev.auckland.ac.nz/identity/oauth2/authorize?client_id=maxx-identity-app&response_type=token";
+        }
+      }]
+    });
+
+    this.nav.present(confirm);
   }
 }
