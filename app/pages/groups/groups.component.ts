@@ -22,7 +22,10 @@ export class GroupsComponent {
   }
 
   dismiss() {
-    this.view.dismiss();
+    // Dismiss view and then reset groups
+    this.view.dismiss().then(() =>{
+      this.user.groups = this.groups;
+    });
   }
 
   initializeItems() {
