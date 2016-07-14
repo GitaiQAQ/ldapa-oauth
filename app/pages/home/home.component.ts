@@ -54,7 +54,14 @@ export class HomeComponent {
         if (data) {
           loading.dismiss().then(() => {
             this.users.push(data);
+
+            this.nav.present(Toast.create({
+              message: `One user found with UPI ${this.upi}`,
+              duration: 4000
+            }));
+
             this.upi = this.users.length > 0 ? "" : this.upi;
+
           });
         } else {
           loading.dismiss().then(() => {
@@ -82,6 +89,11 @@ export class HomeComponent {
 
               if (i == 20) { return false; }
             });
+
+            this.nav.present(Toast.create({
+              message: data.length < 10 ? `Fetched ${data.length} results` : `Fetched first ${data.length} results`,
+              duration: 4000
+            }));
 
             this.firstName = this.users.length > 0 ? "" : this.firstName;
           });
@@ -111,6 +123,11 @@ export class HomeComponent {
 
               if (i == 20) { return false; }
             });
+
+            this.nav.present(Toast.create({
+              message: data.length < 10 ? `Fetched ${data.length} results` : `Fetched first ${data.length} results`,
+              duration: 4000
+            }));
 
             this.lastName = this.users.length > 0 ? "" : this.lastName;
           });
