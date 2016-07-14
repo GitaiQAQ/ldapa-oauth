@@ -54,14 +54,7 @@ export class HomeComponent {
         if (data) {
           loading.dismiss().then(() => {
             this.users.push(data);
-
-            this.nav.present(Toast.create({
-              message: `One user found with UPI ${this.upi}`,
-              duration: 4000
-            }));
-
             this.upi = this.users.length > 0 ? "" : this.upi;
-
           });
         } else {
           loading.dismiss().then(() => {
