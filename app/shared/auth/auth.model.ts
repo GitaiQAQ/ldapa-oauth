@@ -8,15 +8,17 @@ import {NavController, Loading} from "ionic-angular/index";
 
 @Injectable()
 export class AuthModel {
-  // Kong identity endpoint
+  // Kong API location
   public static server: string = "https://proxy.api.dev.auckland.ac.nz";
+
+  // Generic oauth authentication service
   public static authUrl: string = "https://pam.dev.auckland.ac.nz/identity/oauth2/authorize?client_id=maxx-identity-app&response_type=token";
+
   public loading: Loading;
 
   // Logged in user details (access token + logged in user entity)
   public access_token: string;
   public expires_in: number;
-
 
   constructor() {}
 

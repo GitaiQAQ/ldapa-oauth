@@ -144,6 +144,11 @@ export class HomeComponent {
   }
 
   presentFilter(event) {
+    // Reset inputs
+    this.upi = "";
+    this.firstName = "";
+    this.lastName = "";
+
     let popover = Popover.create(FilterComponent, this.excludedFilters);
     this.nav.present(popover, {
       ev: event
