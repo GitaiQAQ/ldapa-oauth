@@ -1,43 +1,34 @@
 import {Component} from '@angular/core';
-import {ViewController, NavParams} from 'ionic-angular';
+import {NavParams} from 'ionic-angular';
 
 /**
- * Filter component
+ * Filter component (for choosing search term)
  */
 
 @Component({
     templateUrl: 'build/pages/filter/filter.component.html'
 })
 export class FilterComponent {
+    radioModel = 'upi';
 
     excludedFilters = {
         upi: true,
-        email: false,
-        displayName: false,
         firstName: false,
         lastName: false
     };
 
-    constructor(private view: ViewController, private navParams: NavParams) {
+    constructor(private navParams: NavParams) {
         this.excludedFilters = navParams.data;
+
+        // Messy but set the default radio-group value to whatever is already viewed
+        if (this.excludedFilters.upi) {this.radioModel = 'upi'}
+        if (this.excludedFilters.firstName) {this.radioModel = 'firstName'}
+        if (this.excludedFilters.lastName) {this.radioModel = 'lastName'}
     }
 
-    resetFilters() {
-        // reset all of the toggles to be checked
-        this.excludedFilters.upi = true;
-        this.excludedFilters.email = false;
-        this.excludedFilters.displayName = false;
-        this.excludedFilters.firstName = false;
-        this.excludedFilters.lastName = false;
-    }
-
-    applyFilters()  {
-        this.dismiss(this.excludedFilters);
-    }
-
-    dismiss(data) {
-        // using the injected ViewController this page
-        // can "dismiss" itself and pass back data
-        this.view.dismiss(data);
+    setValues() {
+        this.excludedFilters.upi = this.radioModel == 'upi' ? true : false;
+        this.excludedFilters.firstName = this.radioModel == 'firstName' ? true : false;
+        this.excludedFilters.lastName = this.radioModel == 'lastName' ? true : false;
     }
 }

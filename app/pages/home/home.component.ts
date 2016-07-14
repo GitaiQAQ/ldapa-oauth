@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {NavController, Toast, Loading, Modal, Storage, Alert, LocalStorage} from 'ionic-angular';
+import {Component} from "@angular/core";
+import {NavController, Toast, Loading, Modal, Storage, Alert, LocalStorage, Popover} from "ionic-angular";
 import {FilterComponent} from "../filter/filter.component";
 import {User} from "../../shared/user/user";
 import {UserService} from "../../shared/user/user.service";
@@ -38,7 +38,10 @@ export class HomeComponent {
     this.localStorage = new Storage(LocalStorage);
   }
 
-  // Just grab upi and search for now
+  /**
+   * Search method
+   * Search by: UPI xor firstName xor lastName
+   */
   search() {
     let loading = Loading.create({
       content: 'Searching',
@@ -73,9 +76,9 @@ export class HomeComponent {
       this.userService.searchUserByName(this.firstName).subscribe(data => {
         if (data) {
           loading.dismiss().then(() => {
-            // Cycle through user and push to view. Limit to first 20 results.
+            // Cycle through userS and push to view. Limit to first 20 results.
             data.forEach((user, i) => {
-              this.users.push(user)
+              this.users.push(user);
 
               if (i == 20) { return false; }
             });
@@ -102,9 +105,9 @@ export class HomeComponent {
       this.userService.searchUserLastName(this.lastName).subscribe(data => {
         if (data) {
           loading.dismiss().then(() => {
-            // Cycle through user and push to view. Limit to first 20 results.
+            // Cycle through userS and push to view. Limit to first 20 results.
             data.forEach((user, i) => {
-              this.users.push(user)
+              this.users.push(user);
 
               if (i == 20) { return false; }
             });
@@ -130,15 +133,11 @@ export class HomeComponent {
     }
   }
 
-  presentFilter() {
-    let modal = Modal.create(FilterComponent, this.excludedFilters);
-    this.nav.present(modal);
-
-    modal.onDismiss(data => {
-      if (data) {
-        this.excludedFilters = data;
-      }
-    });
+  presentFilter(event) {
+    let popover = Popover.create(FilterComponent, this.excludedFilters);
+    this.nav.present(popover, {
+      ev: event
+    })
   }
 
   presentGroups(user: User) {
