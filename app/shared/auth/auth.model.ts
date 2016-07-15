@@ -13,6 +13,7 @@ export class AuthModel {
 
   // Generic oauth authentication service
   public static authUrl: string = "https://pam.dev.auckland.ac.nz/identity/oauth2/authorize?client_id=maxx-identity-app&response_type=token";
+  // public static authUrl: string = "https://pam.dev.auckland.ac.nz/identity/oauth2/authorize?client_id=maxx-slicing-ldapa&response_type=token";
 
   public loading: Loading;
 
