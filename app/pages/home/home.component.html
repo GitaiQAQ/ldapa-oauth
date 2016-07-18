@@ -43,7 +43,7 @@
             </ion-item>
 
             <ion-item>
-                <button (click)="search()">
+                <button (click)="search()" [disabled]="!upi && !firstName && !lastName">
                     <ion-icon name="search"></ion-icon>
                     Do Search
                 </button>
