@@ -1,5 +1,5 @@
 # Ldapa OAuth
-Example of using Ionic V2 framework with OAuth 2 through custom a custom authentication service and Kong as an API Gateway.
+Example of using Ionic V2 framework with OAuth 2 through a custom authentication service and Kong as an API Gateway.
 
 # How to run
 First off, make sure you have the latest version of Node and NPM installed.
