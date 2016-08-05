@@ -1,9 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
-import {Platform, ionicBootstrap, Storage, Nav, Alert, LocalStorage} from 'ionic-angular';
+import {Platform, ionicBootstrap, Storage, Nav, Alert, LocalStorage, Toast} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
 import 'rxjs/add/operator/map'
 import {AuthModel} from "./shared/auth/auth.model";
+import {UserService} from "./shared/user/user.service";
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'
@@ -15,8 +16,8 @@ export class MyApp {
   localStorage: Storage;
 
   constructor(private platform: Platform,
-              private authModel: AuthModel) {
-    this.rootPage = TabsPage;
+              private authModel: AuthModel,
+              private userService: UserService) {
 
     platform.ready().then(() => {
       StatusBar.styleDefault();
@@ -38,28 +39,15 @@ export class MyApp {
    * @param identity_info string
    */
   resolveUser(identity_info) {
-    this.authModel.access_token = JSON.parse(identity_info).oauth.access_token;
-    this.authModel.expires_in = JSON.parse(identity_info).oauth.expires_in;
+    this.userService.getMe(JSON.parse(identity_info).oauth.access_token).subscribe(data => {
+      this.authModel.user = data;
+      this.authModel.access_token = JSON.parse(identity_info).oauth.access_token;
+      this.authModel.expires_in = JSON.parse(identity_info).oauth.expires_in;
 
-    this.localStorage.get('authDate').then(authDate => {
-      let expireDate: Date = new Date(
-        new Date(authDate).getTime() + (this.authModel.expires_in * 1000)
-      );
-
-      let currentDate: Date = new Date();
-
-      console.log(`Authenticated: ${authDate}`);
-      console.log(`Current date: ${currentDate}`);
-      console.log(`Token expires: ${expireDate}`);
-
-      // Current date greater than expiry date; reauth needed
-      if (currentDate >= expireDate) {
-        // Re-authenticate
-        console.log("Token expired, re-authenticating...");
-        this.authenticate();
-      }
-
+      // Navigate to tabs page
       this.rootPage = TabsPage;
+    }, error => {
+      this.authenticate();
     });
   }
 
@@ -89,6 +77,6 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp, [AuthModel], {
+ionicBootstrap(MyApp, [UserService, AuthModel], {
   tabbarPlacement: 'bottom',
 });

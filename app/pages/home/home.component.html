@@ -1,6 +1,11 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Ldapa</ion-title>
+        <ion-buttons start>
+            <button (click)="getMe()">
+                {{authModel.user.name}}
+            </button>
+        </ion-buttons>
         <ion-buttons end>
             <button (click)="logout()">
                 <ion-icon name="log-out"></ion-icon>

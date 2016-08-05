@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, RequestOptions} from "@angular/http";
+import {Http, Headers} from "@angular/http";
 import {AuthModel} from "../auth/auth.model";
 import {Observable} from "rxjs/Rx";
 import {User} from "./user";
@@ -15,6 +15,17 @@ import {User} from "./user";
 @Injectable()
 export class UserService {
   constructor(public http:Http, private authModel: AuthModel) {}
+
+  /**
+   * Get logged in user details
+   * @returns {Observable<User>} User entity
+   */
+  getMe(token: String): Observable<User> {
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + token);
+
+    return this.http.get(AuthModel.server + '/identity/me', {headers: headers}).map(res => res.json());
+  }
 
   /**
    * Fetch a single user and their details by UPI

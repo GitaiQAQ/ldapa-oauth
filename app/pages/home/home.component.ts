@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {NavController, Toast, Loading, Modal, Storage, Alert, LocalStorage, Popover} from "ionic-angular";
 import {FilterComponent} from "../filter/filter.component";
 import {User} from "../../shared/user/user";
@@ -15,7 +15,6 @@ import {AuthModel} from "../../shared/auth/auth.model";
   providers: [UserService]
 })
 export class HomeComponent {
-
   // User list (for display)
   users: Array<User> = [];
 
@@ -36,6 +35,23 @@ export class HomeComponent {
 
   constructor(private nav: NavController, private userService: UserService, private authModel: AuthModel) {
     this.localStorage = new Storage(LocalStorage);
+  }
+
+  /**
+   * Get an entry for logged in user
+   */
+  getMe() {
+    let loading = Loading.create({
+      content: 'Fetching your details',
+      spinner: 'dots'
+    });
+    this.nav.present(loading);
+
+    this.userService.getUserByUpi(this.authModel.user.username).subscribe(data=> {
+      loading.dismiss().then(() => {
+        this.users.push(data);
+      });
+    });
   }
 
   /**
