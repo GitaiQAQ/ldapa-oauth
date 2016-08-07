@@ -1,5 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {NavController, Toast, Loading, Modal, Storage, Alert, LocalStorage, Popover} from "ionic-angular";
+import {
+  NavController, Toast, Loading, Modal, Storage, Alert, LocalStorage, Popover,
+  LoadingController, ToastController, PopoverController, ModalController, AlertController
+} from "ionic-angular";
 import {FilterComponent} from "../filter/filter.component";
 import {User} from "../../shared/user/user";
 import {UserService} from "../../shared/user/user.service";
@@ -16,7 +19,7 @@ import {AuthModel} from "../../shared/auth/auth.model";
 })
 export class HomeComponent {
   // User list (for display)
-  users: Array<User> = [];
+  users: User[] = [];
 
   // NgModels (for searching) Note: Unique searches are prioritized (such as UPI)
   upi: String;
@@ -33,7 +36,14 @@ export class HomeComponent {
     lastName: false
   };
 
-  constructor(private nav: NavController, private userService: UserService, private authModel: AuthModel) {
+  constructor(private nav: NavController,
+              private userService: UserService,
+              private authModel: AuthModel,
+              private loadingCtrl: LoadingController,
+              private toastCtrl: ToastController,
+              private popoverCtrl: PopoverController,
+              private modalCtrl: ModalController,
+              private alterCtrl: AlertController) {
     this.localStorage = new Storage(LocalStorage);
   }
 
@@ -41,11 +51,11 @@ export class HomeComponent {
    * Get an entry for logged in user
    */
   getMe() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       content: 'Fetching your details',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
 
     this.userService.getUserByUpi(this.authModel.user.username).subscribe(data=> {
       loading.dismiss().then(() => {
@@ -59,11 +69,11 @@ export class HomeComponent {
    * Search by: UPI xor firstName xor lastName
    */
   search() {
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       content: 'Searching',
       spinner: 'dots'
     });
-    this.nav.present(loading);
+    loading.present();
 
     if (this.upi) {
       this.userService.getUserByUpi(this.upi).subscribe(data => {
@@ -74,18 +84,18 @@ export class HomeComponent {
           });
         } else {
           loading.dismiss().then(() => {
-            this.nav.present(Toast.create({
+            this.toastCtrl.create({
               message: `User ${this.upi} not found :(`,
               duration: 4000
-            }));
+            }).present();
           });
         }
       }, error => {
         loading.dismiss().then(() => {
-          this.nav.present(Toast.create({
+          this.toastCtrl.create({
             message: JSON.parse(error._body).message,
             duration: 4000
-          }));
+          }).present();
         });
       });
     } else if (this.firstName) {
@@ -99,27 +109,27 @@ export class HomeComponent {
               if (i == 20) { return false; }
             });
 
-            this.nav.present(Toast.create({
+            this.toastCtrl.create({
               message: data.length < 10 ? `Fetched ${data.length} results` : `Fetched first ${data.length} results`,
               duration: 4000
-            }));
+            }).present();
 
             this.firstName = this.users.length > 0 ? "" : this.firstName;
           });
         } else {
           loading.dismiss().then(() => {
-            this.nav.present(Toast.create({
+            this.toastCtrl.create({
               message: `Users with name ${this.firstName} not found :(`,
               duration: 4000
-            }));
+            }).present();
           });
         }
       }, error => {
         loading.dismiss().then(() => {
-          this.nav.present(Toast.create({
+          this.toastCtrl.create({
             message: JSON.parse(error._body).message,
             duration: 4000
-          }));
+          }).present();
         });
       });
     } else if (this.lastName) {
@@ -133,27 +143,27 @@ export class HomeComponent {
               if (i == 20) { return false; }
             });
 
-            this.nav.present(Toast.create({
+            this.toastCtrl.create({
               message: data.length < 10 ? `Fetched ${data.length} results` : `Fetched first ${data.length} results`,
               duration: 4000
-            }));
+            }).present();
 
             this.lastName = this.users.length > 0 ? "" : this.lastName;
           });
         } else {
           loading.dismiss().then(() => {
-            this.nav.present(Toast.create({
+            this.toastCtrl.create({
               message: `Users with last name ${this.lastName} not found :(`,
               duration: 4000
-            }));
+            }).present();
           });
         }
       }, error => {
         loading.dismiss().then(() => {
-          this.nav.present(Toast.create({
+          this.toastCtrl.create({
             message: JSON.parse(error._body).message,
             duration: 4000
-          }));
+          }).present();
         });
       });
     }
@@ -165,15 +175,13 @@ export class HomeComponent {
     this.firstName = "";
     this.lastName = "";
 
-    let popover = Popover.create(FilterComponent, this.excludedFilters);
-    this.nav.present(popover, {
-      ev: event
-    })
+    let popover = this.popoverCtrl.create(FilterComponent, this.excludedFilters);
+    popover.present({ev: event});
   }
 
   presentGroups(user: User) {
-    let modal = Modal.create(GroupsComponent, user);
-    this.nav.present(modal);
+    let modal = this.modalCtrl.create(GroupsComponent, user);
+    modal.present();
   }
 
   clearResults() {
@@ -193,7 +201,7 @@ export class HomeComponent {
     this.authModel.access_token = null;
     this.authModel.expires_in = null;
 
-    let confirm = Alert.create({
+    let confirm = this.alterCtrl.create({
       title: 'Successfully logged out',
       message: "You'll have to log in again to use this app",
       buttons: [{
@@ -204,6 +212,6 @@ export class HomeComponent {
       }]
     });
 
-    this.nav.present(confirm);
+    confirm.present();
   }
 }

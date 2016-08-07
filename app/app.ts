@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {Platform, ionicBootstrap, Storage, Nav, Alert, LocalStorage, Toast} from 'ionic-angular';
+import {Platform, ionicBootstrap, Storage, Nav, Alert, LocalStorage, Toast, AlertController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
 import 'rxjs/add/operator/map'
@@ -12,12 +12,12 @@ import {UserService} from "./shared/user/user.service";
 export class MyApp {
 
   private rootPage:any;
-  @ViewChild(Nav) nav: Nav;
   localStorage: Storage;
 
   constructor(private platform: Platform,
               private authModel: AuthModel,
-              private userService: UserService) {
+              private userService: UserService,
+              private alertCtrl: AlertController) {
 
     platform.ready().then(() => {
       StatusBar.styleDefault();
@@ -55,7 +55,7 @@ export class MyApp {
    * Authentication handler
    */
   authenticate() {
-    let confirm = Alert.create({
+    let confirm = this.alertCtrl.create({
       title: 'Unauthenticated',
       message: "Looks like you need new keys. You'll have to log in again!",
       buttons: [{
@@ -66,7 +66,7 @@ export class MyApp {
       }]
     });
 
-    this.nav.present(confirm);
+    confirm.present();
   }
 
   /**
@@ -78,5 +78,5 @@ export class MyApp {
 }
 
 ionicBootstrap(MyApp, [UserService, AuthModel], {
-  tabbarPlacement: 'bottom',
+  tabPlacement: 'bottom',
 });
