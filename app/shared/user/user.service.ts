@@ -44,7 +44,7 @@ export class UserService {
    * @param firstName (users first name)
    * @returns {Observable<R>}
    */
-  searchUserByName(firstName: String): Observable<Array<User>> {
+  searchUserByName(firstName: String): Observable<User[]> {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
 
@@ -56,7 +56,7 @@ export class UserService {
    * @param lastName (users last name)
    * @returns {Observable<R>}
    */
-  searchUserLastName(lastName: String): Observable<Array<User>> {
+  searchUserLastName(lastName: String): Observable<User[]> {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
 
