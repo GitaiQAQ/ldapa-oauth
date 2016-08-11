@@ -72,7 +72,7 @@
 
     <!-- Might be worth looking into a more mobile friendly grid viewing system - this doesn't look great -->
     <ion-grid>
-        <ion-row class="header">
+        <ion-row class="header" wrap>
             <ion-col class="small">#</ion-col>
             <ion-col class="upi">UPI</ion-col>
             <ion-col>Email</ion-col>
@@ -85,7 +85,7 @@
             <ion-col>Groups</ion-col>
             <ion-col></ion-col>
         </ion-row>
-        <ion-row *ngFor="let user of users, let i = index" class="results">
+        <ion-row class="results" wrap *ngFor="let user of users, let i = index">
             <ion-col class="small">{{i + 1}}</ion-col>
             <ion-col class="upi">{{user.upi}}</ion-col>
             <ion-col>{{user.emailAddress}}</ion-col>

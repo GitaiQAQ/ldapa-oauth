@@ -1,7 +1,6 @@
-import {Component, OnInit} from "@angular/core";
-import {
-  NavController, Toast, Loading, Modal, Storage, Alert, LocalStorage, Popover,
-  LoadingController, ToastController, PopoverController, ModalController, AlertController
+import {Component} from "@angular/core";
+import {Storage, LocalStorage, LoadingController, ToastController, PopoverController,
+  ModalController, AlertController
 } from "ionic-angular";
 import {FilterComponent} from "../filter/filter.component";
 import {User} from "../../shared/user/user";
@@ -36,8 +35,7 @@ export class HomeComponent {
     lastName: false
   };
 
-  constructor(private nav: NavController,
-              private userService: UserService,
+  constructor(private userService: UserService,
               private authModel: AuthModel,
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController,
@@ -80,7 +78,7 @@ export class HomeComponent {
         if (data) {
           loading.dismiss().then(() => {
             this.users.push(data);
-            this.upi = this.users.length > 0 ? "" : this.upi;
+            this.upi = this.users.length > 0 ? '' : this.upi;
           });
         } else {
           loading.dismiss().then(() => {
@@ -114,7 +112,7 @@ export class HomeComponent {
               duration: 4000
             }).present();
 
-            this.firstName = this.users.length > 0 ? "" : this.firstName;
+            this.firstName = this.users.length > 0 ? '' : this.firstName;
           });
         } else {
           loading.dismiss().then(() => {
@@ -148,7 +146,8 @@ export class HomeComponent {
               duration: 4000
             }).present();
 
-            this.lastName = this.users.length > 0 ? "" : this.lastName;
+            // Reset search only if results are found
+            this.lastName = this.users.length > 0 ? '' : this.lastName;
           });
         } else {
           loading.dismiss().then(() => {
@@ -196,13 +195,15 @@ export class HomeComponent {
     }
   }
 
-  logout() {
+  logout(title) {
     this.localStorage.remove('identity_info');
     this.authModel.access_token = null;
     this.authModel.expires_in = null;
 
     let confirm = this.alterCtrl.create({
-      title: 'Successfully logged out',
+      title: title
+        ? title
+        : 'Successfully logged out',
       message: "You'll have to log in again to use this app",
       buttons: [{
         text: 'Login',
