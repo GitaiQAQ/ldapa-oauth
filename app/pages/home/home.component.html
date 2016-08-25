@@ -63,46 +63,48 @@
             </button>
         </ion-buttons>
         <ion-buttons end>
-            <button danger (click)="clearResults()">
+            <button reda (click)="clearResults()">
                 <ion-icon name="close-circle"></ion-icon>
                 Clear
             </button>
         </ion-buttons>
     </ion-toolbar>
 
-    <!-- Might be worth looking into a more mobile friendly grid viewing system - this doesn't look great -->
-    <ion-grid>
-        <ion-row class="header" wrap>
-            <ion-col class="small">#</ion-col>
-            <ion-col class="upi">UPI</ion-col>
-            <ion-col>Email</ion-col>
-            <ion-col>Display name</ion-col>
-            <ion-col>First name</ion-col>
-            <ion-col>Last name</ion-col>
-            <ion-col>Job title</ion-col>
-            <ion-col>Department</ion-col>
-            <ion-col>Mobile</ion-col>
-            <ion-col>Groups</ion-col>
-            <ion-col></ion-col>
-        </ion-row>
-        <ion-row class="results" wrap *ngFor="let user of users, let i = index">
-            <ion-col class="small">{{i + 1}}</ion-col>
-            <ion-col class="upi">{{user.upi}}</ion-col>
-            <ion-col>{{user.emailAddress}}</ion-col>
-            <ion-col>{{user.displayName}}</ion-col>
-            <ion-col>{{user.firstName}}</ion-col>
-            <ion-col>{{user.lastName}}</ion-col>
-            <ion-col>{{user.jobTitle}}</ion-col>
-            <ion-col>{{user.department}}</ion-col>
-            <ion-col>{{user.mobile}}</ion-col>
-            <ion-col>
-                <button clear (click)="presentGroups(user)">View groups</button>
-            </ion-col>
-            <ion-col>
-                <button clear dark (click)="popUser(user)">
-                    <ion-icon name="close-circle"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <user-card *ngFor="let user of users" [user]="user" (userDeleted)="popUser(user)"></user-card>
+
+    <!--&lt;!&ndash; Might be worth looking into a more mobile friendly grid viewing system - this doesn't look great &ndash;&gt;-->
+    <!--<ion-grid>-->
+        <!--<ion-row class="header" wrap>-->
+            <!--<ion-col class="small">#</ion-col>-->
+            <!--<ion-col class="upi">UPI</ion-col>-->
+            <!--<ion-col>Email</ion-col>-->
+            <!--<ion-col>Display name</ion-col>-->
+            <!--<ion-col>First name</ion-col>-->
+            <!--<ion-col>Last name</ion-col>-->
+            <!--<ion-col>Job title</ion-col>-->
+            <!--<ion-col>Department</ion-col>-->
+            <!--<ion-col>Mobile</ion-col>-->
+            <!--<ion-col>Groups</ion-col>-->
+            <!--<ion-col></ion-col>-->
+        <!--</ion-row>-->
+        <!--<ion-row class="results" wrap *ngFor="let user of users, let i = index">-->
+            <!--<ion-col class="small">{{i + 1}}</ion-col>-->
+            <!--<ion-col class="upi">{{user.upi}}</ion-col>-->
+            <!--<ion-col>{{user.emailAddress}}</ion-col>-->
+            <!--<ion-col>{{user.displayName}}</ion-col>-->
+            <!--<ion-col>{{user.firstName}}</ion-col>-->
+            <!--<ion-col>{{user.lastName}}</ion-col>-->
+            <!--<ion-col>{{user.jobTitle}}</ion-col>-->
+            <!--<ion-col>{{user.department}}</ion-col>-->
+            <!--<ion-col>{{user.mobile}}</ion-col>-->
+            <!--<ion-col>-->
+                <!--<button clear (click)="presentGroups(user)">View groups</button>-->
+            <!--</ion-col>-->
+            <!--<ion-col>-->
+                <!--<button clear dark (click)="popUser(user)">-->
+                    <!--<ion-icon name="close-circle"></ion-icon>-->
+                <!--</button>-->
+            <!--</ion-col>-->
+        <!--</ion-row>-->
+    <!--</ion-grid>-->
 </ion-content>

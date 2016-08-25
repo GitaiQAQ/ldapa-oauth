@@ -7,6 +7,7 @@ import {User} from "../../shared/user/user";
 import {UserService} from "../../shared/user/user.service";
 import {GroupsComponent} from "../groups/groups.component";
 import {AuthModel} from "../../shared/auth/auth.model";
+import {UserCardComponent} from "../../shared/usercard/usercard.component";
 
 /**
  * Home component
@@ -14,6 +15,7 @@ import {AuthModel} from "../../shared/auth/auth.model";
 
 @Component({
   templateUrl: 'build/pages/home/home.component.html',
+  directives: [UserCardComponent],
   providers: [UserService]
 })
 export class HomeComponent {

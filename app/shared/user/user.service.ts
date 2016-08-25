@@ -42,7 +42,7 @@ export class UserService {
   /**
    * Get a list of users by their name
    * @param firstName (users first name)
-   * @returns {Observable<R>}
+   * @returns {Observable<User>}
    */
   searchUserByName(firstName: String): Observable<User[]> {
     let headers = new Headers();
@@ -54,7 +54,7 @@ export class UserService {
   /**
    * Get a list of users by their last name
    * @param lastName (users last name)
-   * @returns {Observable<R>}
+   * @returns {Observable<User>}
    */
   searchUserLastName(lastName: String): Observable<User[]> {
     let headers = new Headers();
