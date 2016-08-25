@@ -55,10 +55,7 @@
             </div>
         </ion-item-group>
     </ion-list>
-    <ion-item>
-        <ion-label>Mobile view</ion-label>
-        <ion-toggle danger [(ngModel)]="mobileView"></ion-toggle>
-    </ion-item>
+
     <ion-toolbar white>
         <ion-buttons item-left>
             <button primary (click)="presentFilter()">
@@ -66,6 +63,10 @@
             </button>
         </ion-buttons>
         <ion-buttons end>
+            <button lightred (click)="mobileView = !mobileView">
+                <ion-label item-right>Mobile view</ion-label>
+                <ion-toggle danger [(ngModel)]="mobileView"></ion-toggle>
+            </button>
             <button reda (click)="clearResults()">
                 <ion-icon name="close-circle"></ion-icon>
                 Clear
