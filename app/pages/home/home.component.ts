@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
-import {Storage, LocalStorage, LoadingController, ToastController, PopoverController,
-  ModalController, AlertController
+import {
+  Storage, LocalStorage, LoadingController, ToastController, PopoverController,
+  ModalController, AlertController, Platform
 } from "ionic-angular";
 import {FilterComponent} from "../filter/filter.component";
 import {User} from "../../shared/user/user";
@@ -21,6 +22,8 @@ import {UserCardComponent} from "../../shared/usercard/usercard.component";
 export class HomeComponent {
   // User list (for display)
   users: User[] = [];
+
+  mobileView: boolean = false;
 
   // NgModels (for searching) Note: Unique searches are prioritized (such as UPI)
   upi: String;
@@ -43,8 +46,14 @@ export class HomeComponent {
               private toastCtrl: ToastController,
               private popoverCtrl: PopoverController,
               private modalCtrl: ModalController,
-              private alterCtrl: AlertController) {
+              private alterCtrl: AlertController,
+              private platform: Platform) {
     this.localStorage = new Storage(LocalStorage);
+
+    // Set default mobile view to whatever platform initially viewed on
+    if (platform.is("cordova") || platform.is("android") || platform.is("ios")) {
+      this.mobileView = true;
+    }
   }
 
   /**

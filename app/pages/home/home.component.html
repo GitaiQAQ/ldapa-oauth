@@ -55,7 +55,10 @@
             </div>
         </ion-item-group>
     </ion-list>
-
+    <ion-item>
+        <ion-label>Mobile view</ion-label>
+        <ion-toggle danger [(ngModel)]="mobileView"></ion-toggle>
+    </ion-item>
     <ion-toolbar white>
         <ion-buttons item-left>
             <button primary (click)="presentFilter()">
@@ -69,6 +72,43 @@
             </button>
         </ion-buttons>
     </ion-toolbar>
-
-    <user-card *ngFor="let user of users" [user]="user" (userDeleted)="popUser(user)"></user-card>
+    <div *ngIf="mobileView">
+        <user-card *ngFor="let user of users" [user]="user" (userDeleted)="popUser(user)"></user-card>
+    </div>
+    <div *ngIf="!mobileView">
+        <ion-grid>
+            <ion-row class="header" wrap>
+                <ion-col class="small">#</ion-col>
+                <ion-col class="upi">UPI</ion-col>
+                <ion-col>Email</ion-col>
+                <ion-col>Display name</ion-col>
+                <ion-col>First name</ion-col>
+                <ion-col>Last name</ion-col>
+                <ion-col>Job title</ion-col>
+                <ion-col>Department</ion-col>
+                <ion-col>Mobile</ion-col>
+                <ion-col>Groups</ion-col>
+                <ion-col></ion-col>
+            </ion-row>
+            <ion-row class="results" wrap *ngFor="let user of users, let i = index">
+                <ion-col class="small">{{i + 1}}</ion-col>
+                <ion-col class="upi">{{user.upi}}</ion-col>
+                <ion-col>{{user.emailAddress}}</ion-col>
+                <ion-col>{{user.displayName}}</ion-col>
+                <ion-col>{{user.firstName}}</ion-col>
+                <ion-col>{{user.lastName}}</ion-col>
+                <ion-col>{{user.jobTitle}}</ion-col>
+                <ion-col>{{user.department}}</ion-col>
+                <ion-col>{{user.mobile}}</ion-col>
+                <ion-col>
+                    <button clear (click)="presentGroups(user)">View groups</button>
+                </ion-col>
+                <ion-col>
+                    <button clear dark (click)="popUser(user)">
+                        <ion-icon name="close-circle"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
 </ion-content>
