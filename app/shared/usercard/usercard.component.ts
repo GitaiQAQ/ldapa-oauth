@@ -17,6 +17,10 @@ import {GroupsComponent} from "../../pages/groups/groups.component";
             <h2>Username</h2>
             <p>{{user.upi}}</p>
         </ion-item>
+        <ion-item padding *ngIf="user.emailAddress">
+            <h2>Email</h2>
+            <p>{{user.emailAddress}}</p>
+        </ion-item>
         <ion-item padding *ngIf="user.jobTitle">
             <h2>Job Title</h2>
             <p>{{user.jobTitle}}</p>
