@@ -26,33 +26,30 @@
                 </ion-buttons>
             </ion-toolbar>
 
-            <ion-item *ngIf="excludedFilters.upi">
-                <ion-label floating>UPI</ion-label>
-                <ion-input [(ngModel)]="upi" type="text"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="excludedFilters.email">
-                <ion-label floating>Email</ion-label>
-                <ion-input type="text"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="excludedFilters.displayName">
-                <ion-label floating>Display name</ion-label>
-                <ion-input type="text"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="excludedFilters.firstName">
-                <ion-label floating>First name</ion-label>
-                <ion-input [(ngModel)]="firstName" type="text"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="excludedFilters.lastName">
-                <ion-label floating>Last name</ion-label>
-                <ion-input [(ngModel)]="lastName" type="text"></ion-input>
-            </ion-item>
-
-            <div padding>
-                <button (click)="search()" [disabled]="!upi && !firstName && !lastName">
-                    <ion-icon name="search"></ion-icon>
-                    Do Search
-                </button>
-            </div>
+            <ion-toolbar white>
+                <ion-item *ngIf="excludedFilters.upi">
+                    <ion-label floating>UPI</ion-label>
+                    <ion-input [(ngModel)]="upi" type="text"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="excludedFilters.email">
+                    <ion-label floating>Email</ion-label>
+                    <ion-input type="text"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="excludedFilters.firstName">
+                    <ion-label floating>First name</ion-label>
+                    <ion-input [(ngModel)]="firstName" type="text"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="excludedFilters.lastName">
+                    <ion-label floating>Last name</ion-label>
+                    <ion-input [(ngModel)]="lastName" type="text"></ion-input>
+                </ion-item>
+                <ion-buttons end>
+                    <button (click)="search()" item-right [disabled]="!upi && !firstName && !lastName">
+                        <ion-icon name="search"></ion-icon>
+                        Search
+                    </button>
+                </ion-buttons>
+            </ion-toolbar>
         </ion-item-group>
     </ion-list>
 
