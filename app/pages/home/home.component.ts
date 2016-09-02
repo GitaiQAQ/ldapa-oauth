@@ -25,7 +25,8 @@ export class HomeComponent {
 
   mobileView: boolean = false;
 
-  // NgModels (for searching) Note: Unique searches are prioritized (such as UPI)
+  // NgModels (for searching) Note: Unique searches are prioritized (such as UPI and ID)
+  id: String;
   upi: String;
   firstName: String;
   lastName: String;
@@ -33,6 +34,7 @@ export class HomeComponent {
   localStorage: Storage;
 
   excludedFilters = {
+    id: false,
     upi: true,
     email: false,
     displayName: false,
@@ -184,6 +186,7 @@ export class HomeComponent {
     this.upi = "";
     this.firstName = "";
     this.lastName = "";
+    this.id = "";
 
     let popover = this.popoverCtrl.create(FilterComponent, this.excludedFilters);
     popover.present({ev: event});

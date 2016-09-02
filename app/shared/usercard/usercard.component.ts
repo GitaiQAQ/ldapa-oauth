@@ -12,7 +12,10 @@ import {GroupsComponent} from "../../pages/groups/groups.component";
     <ion-card-title>
         {{user.displayName}}
     </ion-card-title>
-        
+        <ion-item padding *ngIf="user.id">
+            <h2>ID</h2>
+            <p>{{user.id}}</p>
+        </ion-item>
         <ion-item padding>
             <h2>Username</h2>
             <p>{{user.upi}}</p>

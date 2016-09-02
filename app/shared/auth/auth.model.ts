@@ -14,10 +14,10 @@ export class AuthModel {
   public user: User;
 
   // Kong API location
-  public static server: string = "https://proxy.api.dev.auckland.ac.nz";
+  public static server: string = "https://api.dev.auckland.ac.nz/service";
 
   // Generic oauth authentication service
-  public static authUrl: string = "https://pam.dev.auckland.ac.nz/identity/oauth2/authorize?client_id=maxx-slicing-ldapa&response_type=token&scope=identity-read&redirect_uri=http://localhost:8100/build/shared/callback/callback.html";
+  public static authUrl: string = "https://oauth.dev.auckland.ac.nz/identity-proto/oauth2/authorize?client_id=max-identity-app&response_type=token&scope=identity-read&redirect_uri=http://localhost:8100/build/shared/callback/callback.html";
 
   // Logged in user details (access token + logged in user entity)
   public access_token: string;

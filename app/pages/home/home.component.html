@@ -1,9 +1,14 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Ldapa</ion-title>
         <ion-buttons start>
             <button (click)="getMe()">
                 {{authModel.user.name}}
+            </button>
+        </ion-buttons>
+        <ion-buttons left>
+            <button (click)="presentFilter($event)">
+                <ion-icon name="settings"></ion-icon>
+                Search Filter
             </button>
         </ion-buttons>
         <ion-buttons end>
@@ -18,15 +23,10 @@
     <ion-list>
         <ion-item-group>
             <ion-toolbar white>
-                <ion-buttons>
-                    <button primary (click)="presentFilter($event)">
-                        <ion-icon name="settings"></ion-icon>
-                        Search Filter
-                    </button>
-                </ion-buttons>
-            </ion-toolbar>
-
-            <ion-toolbar white>
+                <ion-item *ngIf="excludedFilters.id">
+                    <ion-label floating>ID</ion-label>
+                    <ion-input [(ngModel)]="upi" type="number"></ion-input>
+                </ion-item>
                 <ion-item *ngIf="excludedFilters.upi">
                     <ion-label floating>UPI</ion-label>
                     <ion-input [(ngModel)]="upi" type="text"></ion-input>
@@ -77,6 +77,7 @@
         <ion-grid>
             <ion-row class="header" wrap>
                 <ion-col class="small">#</ion-col>
+                <ion-col class="upi">ID</ion-col>
                 <ion-col class="upi">UPI</ion-col>
                 <ion-col>Email</ion-col>
                 <ion-col>Display name</ion-col>
@@ -90,6 +91,7 @@
             </ion-row>
             <ion-row class="results" wrap *ngFor="let user of users, let i = index">
                 <ion-col class="small">{{i + 1}}</ion-col>
+                <ion-col class="upi">{{user.id}}</ion-col>
                 <ion-col class="upi">{{user.upi}}</ion-col>
                 <ion-col>{{user.emailAddress}}</ion-col>
                 <ion-col>{{user.displayName}}</ion-col>

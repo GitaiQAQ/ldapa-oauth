@@ -24,7 +24,7 @@ export class UserService {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + token);
 
-    return this.http.get(AuthModel.server + '/identity/me', {headers: headers}).map(res => res.json());
+    return this.http.get(AuthModel.server + '/identity-proto/me', {headers: headers}).map(res => res.json());
   }
 
   /**
@@ -36,7 +36,7 @@ export class UserService {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
 
-    return this.http.get(AuthModel.server + '/identity/' + upi, {headers: headers}).map(res => res.json());
+    return this.http.get(AuthModel.server + '/identity-proto/' + upi, {headers: headers}).map(res => res.json());
   }
 
   /**
@@ -48,7 +48,7 @@ export class UserService {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
 
-    return this.http.get(AuthModel.server + '/identity/_search?firstname=' + firstName, {headers: headers}).map(res => res.json());
+    return this.http.get(AuthModel.server + '/identity-proto/_search?firstname=' + firstName, {headers: headers}).map(res => res.json());
   }
 
   /**
@@ -60,6 +60,6 @@ export class UserService {
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.authModel.access_token);
 
-    return this.http.get(AuthModel.server + '/identity/_search?lastname=' + lastName, {headers: headers}).map(res => res.json());
+    return this.http.get(AuthModel.server + '/identity-proto/_search?lastname=' + lastName, {headers: headers}).map(res => res.json());
   }
 }
