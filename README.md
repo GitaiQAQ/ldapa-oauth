@@ -10,4 +10,4 @@ First off, make sure you have the latest version of Node and NPM installed.
 * Make sure you have Ionic v2 globally installed $ npm install -g ionic@beta
 * Start watching and building the client $ ionic serve
 * Change the callback URL in callback.html
-* Change API url in `auth.model.ts` to wherever you API is located 
+* Change API url in `auth.model.ts` to wherever your API is located 
